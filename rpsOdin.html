@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //Array of choices
+       const choice = ["rock", "paper", "scissors"];
+       let computerChoice;
+       let score;
+       let playerScore;
+       let computerScore;
+    
+       function getComputerChoice() {
+            computerChoice = choice[Math.floor(Math.random() * choice.length)];
+            return computerChoice;
+       }
+
+       //Determine the winner
+       function roundWinner(playerSelection, computerSelection) {
+            if (playerSelection == computerSelection) {
+                return "Draw";
+            }
+            else if ((playerSelection == "rock" && computerSelection == "scissors") ||
+            (playerSelection == "scissors" && computerSelection == "paper") ||
+            (playerSelection == "paper" && computerSelection == "rock")) {
+                return "Player";
+            }
+            else {
+                return "Computer";
+            }
+       }
+
+       //Play one round and print out who wins.
+       function playRound(playerSelection, computerSelection) {
+            const winner = roundWinner(playerSelection, computerSelection);
+            if (winner == "Draw") {
+                return `It's a draw! ${playerSelection} is the same as ${computerSelection}.`
+            }
+            else if (winner == "Player") {
+                return `You win! ${playerSelection} beats ${computerSelection}.`
+            }
+            else {
+                return `The computer wins! ${computerSelection} beats ${playerSelection}.`
+            }
+       }
+
+       function getPlayerChoice() {
+            let validInput = false;
+            while(validInput == false) {
+                const userChoice = prompt("Choose Rock, Paper or Scissors:");
+                if (userChoice == null){
+                    continue;
+                }
+                const userChoiceLower = userChoice.toLowerCase();
+                if (choice.includes(userChoiceLower)){
+                    validInput = true;
+                    return userChoiceLower;
+                }
+            }
+       }
+
+       function game() {
+        let playerScore = 0;
+        let computerScore = 0;
+        for (let i = 0; i < 5; i++) {
+            const playerSelection = getPlayerChoice();
+            const computerSelection = getComputerChoice();
+            console.log(playRound(playerSelection, computerSelection));
+           
+            if(roundWinner(playerSelection, computerSelection) == "Player") {
+                playerScore++;
+            }
+
+            else if (roundWinner(playerSelection, computerSelection) == "Computer") {
+                computerScore++;
+            }
+        }
+
+        console.log("Game Over!")
+        if(playerScore > computerScore) {
+            console.log(`You won! Player Score: ${playerScore} Computer Score: ${computerScore}`);
+        }
+
+        else if (computerScore > playerScore) {
+            console.log(`The computer won! Computer Score: ${computerScore} Player Score: ${playerScore}`);
+        }
+        
+        else {
+            console.log("It was a draw!");
+        }
+       }
+
+       game();
+      
+
+    </script>
+</body>
+</html>
